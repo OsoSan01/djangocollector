@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Knife {{ knife.name}} Details</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ knife.name }}</span>
+    <p>type: {{ knife.type }}</p>
+    <p>Description: {{ knife.description|linebreaks }}</p>
+    <p>Knife size: {{ knife.size }}</p>
+    {% if knife.size < 140 %}
+          <p>Size: Manageble</p>
+        {% else %}
+          <p>Size: Challenging for small hands</p>  
+        {% endif %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,11 +1,5 @@
 from django.shortcuts import render
-
-
-# Add knifes cats list below the imports
-knives = [
-  {'name': 'Okeya Ginsan Ai-Deba', 'type': 'Deba-fish. Single bebel', 'description': '	Okeya knives are crafted by a Father and Son team in Miki City, Hyogo. The Ginsan (Silver 3, GIN3) Stainless Steel series of knives are incredible value for money, perhaps the best we offer. All stainless, with a unique Tsuchime (hammered) finish, they are hardened to HRC61 and hold a great edge without being brittle, whilst being very light and nimble. The grinds are thin behind the edge but come to have a 2mm thick spine. ', 'size': 135},
-  {'name': 'HADO Blue 1 Damascus Bunka', 'type': 'Bunka. General purpose', 'description': "HADO Sakai are, in our opinion, among Japan's premier knife makers. Everything about their ranges is exquisite. The packaging has been custom designed in collaboration with French artist Phillipe Weisbecker, of which this packaging houses one of the finest blades we have ever seen.", 'size': 167},
-]
+from .models import Knife
 
 
 # Create your views here.
@@ -17,7 +11,11 @@ def about(request):
 
 # Add new view
 def knives_index(request):
-  # We pass data to a template very much like we did in Express!
+  knives = Knife.objects.all()
   return render(request, 'knives/index.html', {
     'knives': knives
   })
+
+def knives_detail(request, knife_id):
+  knife = Knife.objects.get(id=knife_id)
+  return render(request, 'knives/detail.html', {'knife':knife})
