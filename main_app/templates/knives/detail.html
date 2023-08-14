@@ -3,24 +3,69 @@
 
 <h1>Knife {{ knife.name}} Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ knife.name }}</span>
-    <p>type: {{ knife.type }}</p>
-    <p>Description: {{ knife.description|linebreaks }}</p>
-    <p>Knife size: {{ knife.size }}</p>
-    {% if knife.size < 140 %}
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ knife.name }}</span>
+        <p>type: {{ knife.type }}</p>
+        <p>Description: {{ knife.description|linebreaks }}</p>
+        <p>Knife size: {{ knife.size }}</p>
+        {% if knife.size < 140 %}
           <p>Size: Manageble</p>
         {% else %}
           <p>Size: Challenging for small hands</p>  
         {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'knife_update' knife.id %}">Edit</a>
+        <a href="{% url 'knife_delete' knife.id %}">Delete</a>
+      </div>
+    </div>
   </div>
-  <div class="card-action">
-    <a href="{% url 'knife_update' knife.id %}">Edit</a> 
-    <!-- will show the edit form -->
-    <a href="{% url 'knife_delete' knife.id %}">Delete</a>
+
+  <!-- New Markup Below -->
+  <div class="col s6">
+    <form action="{% url 'add_sharpening' knife.id %}" method="POST">
+      {% csrf_token %}
+      <!-- Render the inputs -->
+      {{ sharpening_form.as_p }}
+      <input type="submit" class="btn" value="Add Sharpening Log">
+    </form>
+    <br>
+    {% if knife.sharp_for_today %}
+      <div class="card-panel teal-text center-align">{{knife.name}} has been given proper maintenance and love</div>
+    {% else %}
+      <div class="card-panel red-text center-align">{{knife.name}} might be blunt and demands blood</div>
+    {% endif %}
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Knife Condition</th></tr>
+      </thead>
+      <tbody>
+        {% for sharpening in knife.sharpening_set.all %}
+          <tr>
+            <td>{{sharpening.date}}</td>
+            <td>{{sharpening.get_condition_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-</div>
+  <!-- New Markup Above -->
 </div>
 
+<script>
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  const selectEl = document.getElementById('id_condition');
+  M.FormSelect.init(selectEl);
+</script>
 {% endblock %}
+

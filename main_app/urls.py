@@ -9,4 +9,5 @@ urlpatterns = [
   path('knives/create/', views.KnifeCreate.as_view(), name='knives_create'),
   path('knives/<int:pk>/update', views.KnifeUpdate.as_view(), name='knife_update'),
   path('knives/<int:pk>/delete', views.KnifeDelete.as_view(), name='knife_delete'),
+  path('knives/<int:knife_id>/add_sharpening/', views.add_sharpening, name='add_sharpening'),
 ]
