@@ -15,6 +15,12 @@
           <p>Size: Challenging for small hands</p>  
         {% endif %}
   </div>
+  <div class="card-action">
+    <a href="{% url 'knife_update' knife.id %}">Edit</a> 
+    <!-- will show the edit form -->
+    <a href="{% url 'knife_delete' knife.id %}">Delete</a>
+  </div>
+</div>
 </div>
 
 {% endblock %}

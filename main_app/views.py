@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Knife
 
 
@@ -19,3 +20,16 @@ def knives_index(request):
 def knives_detail(request, knife_id):
   knife = Knife.objects.get(id=knife_id)
   return render(request, 'knives/detail.html', {'knife':knife})
+
+
+class KnifeCreate(CreateView):
+  model = Knife
+  fields = '__all__'
+
+class KnifeUpdate(UpdateView):
+  model = Knife
+  fields = ['type', 'description', 'size']
+
+class KnifeDelete(DeleteView):
+  model = Knife
+  succes_url = '/knives'

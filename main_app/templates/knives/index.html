@@ -5,7 +5,7 @@
 
 {% for knife in knives %}
   <div class="card">
-    <a href="/knives/{{ knife.id }}">
+    <a href="{% url 'detail' knife.id %}">
       <div class="card-content">
         <span class="card-title">{{ knife.name }}</span>
         <p>Type: {{ knife.type }}</p>
