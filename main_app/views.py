@@ -22,7 +22,7 @@ def knives_index(request):
 
 def knives_detail(request, knife_id):
   knife = Knife.objects.get(id=knife_id)
-  id_list = knife.accessory.all().values_list('id')
+  id_list = knife.accessories.all().values_list('id')
   accessories_knife_doesnt_have = Accessory.objects.exclude(id__in=id_list)
   sharpening_form = SharpeningForm()
   return render(request, 'knives/detail.html', {
@@ -64,7 +64,7 @@ class AccessoryCreate(CreateView):
 
 class AccessoryUpdate(UpdateView):
   model = Accessory
-  fields = ['name', 'color']
+  fields = ['name', 'purpose']
 
 class AccessoryDelete(DeleteView):
   model = Accessory

@@ -8,7 +8,7 @@ CONDITION = (
   ('H', 'Honing/Maintenance'),
 )
 
-# Create your models here.
+
 class Accessory(models.Model):
   name = models.CharField(max_length=50)
   purpose= models.CharField(max_length=100)
@@ -17,10 +17,10 @@ class Accessory(models.Model):
     return self.name
 
   def get_absolute_url(self):
-    return reverse('Accessories_detail', kwargs={'pk': self.id})
+    return reverse('accessories_detail', kwargs={'pk': self.id})
 
 
-# Create your models here.
+
 class Knife(models.Model):
     name = models.CharField(max_length=300)
     type = models.CharField(max_length=300)
